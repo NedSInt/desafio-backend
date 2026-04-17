@@ -2,6 +2,11 @@
 
 API em NestJS que recebe um CEP de origem e um raio em KM e retorna os CEPs localizados dentro da area geografica.
 
+> **Escopo da base utilizada:** para esta entrega, foi utilizado apenas um recorte de CEPs da cidade de **Nova Friburgo (RJ)**.  
+> Esse recorte foi adotado devido a limitacao das bases CSV publicas sem latitude/longitude completas para todo o Brasil.
+> A propria base em CSV do **CepAberto** (fonte recomendada no desafio) nao inclui latitude e longitude.  
+> Por isso, implementei uma solucao de enriquecimento que consulta a API do CepAberto para obter essas coordenadas e gerar uma base local pronta para consulta por raio.
+
 ## Instruções de instalação
 
 ### Pré-requisitos
