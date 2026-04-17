@@ -47,6 +47,20 @@ API disponível em: `http://localhost:3000`
 
 - `http://localhost:3000/docs`
 
+## Como rodar o HTML (fluxo visual)
+
+1. Com a API rodando (`npm run start:dev`), abra um novo terminal.
+2. Execute:
+
+```bash
+npx serve client
+```
+
+3. Acesse no navegador a URL exibida no terminal (ex.: `http://localhost:3001`).
+4. Informe `cep` e `raioKm`, clique em **Buscar** e visualize os resultados em lista.
+
+> Observação: se preferir, também é possível abrir `client/index.html` com a extensão Live Server.
+
 ### Endpoint
 
 `GET /ceps/radius?cep=28605170&raioKm=5`

@@ -22,7 +22,7 @@ async function loadStates(baseDir: string): Promise<Map<string, State>> {
   const states = new Map<string, State>();
   const file = path.join(baseDir, 'states.csv');
   const rl = readline.createInterface({
-    input: fs.createReadStream(file, { encoding: 'latin1' }),
+    input: fs.createReadStream(file, { encoding: 'utf-8' }),
     crlfDelay: Infinity,
   });
 
@@ -45,7 +45,7 @@ async function loadCities(baseDir: string): Promise<Map<string, City>> {
   const cities = new Map<string, City>();
   const file = path.join(baseDir, 'cities.csv');
   const rl = readline.createInterface({
-    input: fs.createReadStream(file, { encoding: 'latin1' }),
+    input: fs.createReadStream(file, { encoding: 'utf-8' }),
     crlfDelay: Infinity,
   });
 
@@ -91,7 +91,7 @@ async function processCepFiles(baseDir: string): Promise<void> {
   for (const fileName of files) {
     const filePath = path.join(baseDir, fileName);
     const rl = readline.createInterface({
-      input: fs.createReadStream(filePath, { encoding: 'latin1' }),
+      input: fs.createReadStream(filePath, { encoding: 'utf-8' }),
       crlfDelay: Infinity,
     });
 
