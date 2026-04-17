@@ -111,6 +111,23 @@ Cada requisição gera uma linha em `logs/requests.log` (JSON estruturado) com:
 - uso de CPU
 - rota, status e requestId
 
+## Evidência de entrega (teste de concorrência)
+
+Comando executado:
+
+```bash
+npx autocannon -c 100 -d 20 "http://localhost:3000/ceps/radius?cep=28635180&raioKm=5"
+```
+
+Resultados principais:
+
+- ~551 req/s
+- latência média ~180 ms
+- p99 ~225 ms
+- ~11k requisições em 20s
+
+Conclusão: a API suporta concorrência sem sinais de bloqueio significativo do event loop no cenário testado.
+
 ## Observação sobre preparação de dados
 
 Durante o desenvolvimento, foi necessário enriquecer a base CSV original com latitude/longitude, pois os CSVs públicos do CepAberto não trazem essas colunas.
