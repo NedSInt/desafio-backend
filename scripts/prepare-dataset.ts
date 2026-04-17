@@ -8,6 +8,8 @@ interface City {
 }
 
 interface State {
+  id: string;
+  name: string;
   uf: string;
 }
 
@@ -25,11 +27,15 @@ async function loadStates(baseDir: string): Promise<Map<string, State>> {
   });
 
   for await (const line of rl) {
-    const [id, _name, uf] = line.split(',');
+    const [id, name, uf] = line.split(',');
     if (!id || !uf) {
       continue;
     }
-    states.set(id, { uf: uf.trim() });
+    states.set(id.trim(), {
+      id: id.trim(),
+      name: (name ?? '').trim(),
+      uf: uf.trim(),
+    });
   }
 
   return states;
@@ -94,9 +100,12 @@ async function processCepFiles(baseDir: string): Promise<void> {
         continue;
       }
       total += 1;
-      const [cep, logradouro, complemento, bairro, cityId] = line.split(',');
-      const city = cities.get(cityId ?? '');
-      const state = city ? states.get(city.stateId) : undefined;
+      const [cep, logradouro, complemento, bairro, cityId, rowStateId] = line.split(',');
+      const normalizedCityId = (cityId ?? '').trim();
+      const normalizedRowStateId = (rowStateId ?? '').trim();
+      const city = cities.get(normalizedCityId);
+      const resolvedStateId = city?.stateId ?? normalizedRowStateId;
+      const state = states.get(resolvedStateId);
       const coord = coords.get((cep ?? '').trim());
 
       if (!coord) {
@@ -110,7 +119,10 @@ async function processCepFiles(baseDir: string): Promise<void> {
           logradouro: (logradouro ?? '').trim(),
           complemento: (complemento ?? '').trim(),
           bairro: (bairro ?? '').trim(),
+          cidadeId: normalizedCityId,
           cidade: city?.name ?? '',
+          estadoId: resolvedStateId,
+          estado: state?.name ?? '',
           uf: state?.uf ?? '',
           latitude: coord.lat,
           longitude: coord.lon,

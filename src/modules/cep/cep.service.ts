@@ -6,10 +6,14 @@ import { CepRepository } from './infra/cep.repository';
 
 interface CepResult {
   cep: string;
+  complemento: string;
+  logradouro: string;
+  bairro: string;
+  cidadeId: string;
   uf: string;
   cidade: string;
-  bairro: string;
-  logradouro: string;
+  estadoId: string;
+  estado: string;
   latitude: number;
   longitude: number;
   distanciaKm: number;
@@ -55,10 +59,14 @@ export class CepService {
       if (distance <= dto.raioKm) {
         results.push({
           cep: record.cep,
+          complemento: record.complemento,
+          logradouro: record.logradouro,
+          bairro: record.bairro,
+          cidadeId: record.cidadeId,
           uf: record.uf,
           cidade: record.cidade,
-          bairro: record.bairro,
-          logradouro: record.logradouro,
+          estadoId: record.estadoId,
+          estado: record.estado,
           latitude: record.latitude,
           longitude: record.longitude,
           distanciaKm: Number(distance.toFixed(3)),

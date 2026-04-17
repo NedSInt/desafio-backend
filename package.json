@@ -8,7 +8,9 @@
     "start": "node dist/main.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
     "enrich:coords": "ts-node --transpile-only scripts/enrich-coordinates.ts",
-    "prepare:data": "ts-node --transpile-only scripts/prepare-dataset.ts"
+    "prepare:data": "ts-node --transpile-only scripts/prepare-dataset.ts",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch"
   },
   "keywords": [],
   "author": "",
@@ -18,13 +20,18 @@
     "@nestjs/common": "^11.1.19",
     "@nestjs/core": "^11.1.19",
     "@nestjs/platform-express": "^11.1.19",
+    "@nestjs/swagger": "^11.3.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.2"
+    "rxjs": "^7.8.2",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.6.0",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^6.0.3"

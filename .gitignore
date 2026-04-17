@@ -1,4 +1,3 @@
 node_modules
 dist
 logs/requests.log
-data/ceps-geocoded.ndjson
