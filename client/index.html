@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Busca de CEPs por raio</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; }
+      form { display: flex; gap: 8px; margin-bottom: 12px; }
+      input, button { padding: 8px; }
+      li { margin-bottom: 6px; }
+    </style>
+  </head>
+  <body>
+    <h1>Busca de CEPs por raio</h1>
+    <form id="form">
+      <input id="cep" placeholder="CEP (ex.: 01001000)" required />
+      <input id="raioKm" type="number" step="0.1" min="0.1" max="200" placeholder="Raio em km" required />
+      <button type="submit">Buscar</button>
+    </form>
+    <p id="status"></p>
+    <ul id="lista"></ul>
+
+    <script>
+      const form = document.getElementById('form');
+      const status = document.getElementById('status');
+      const lista = document.getElementById('lista');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        status.textContent = 'Consultando...';
+        lista.innerHTML = '';
+
+        const cep = document.getElementById('cep').value;
+        const raioKm = document.getElementById('raioKm').value;
+        const url = `http://localhost:3000/ceps/radius?cep=${encodeURIComponent(cep)}&raioKm=${encodeURIComponent(raioKm)}`;
+
+        try {
+          const response = await fetch(url);
+          const body = await response.json();
+          if (!response.ok) {
+            status.textContent = body.message || 'Erro ao consultar API.';
+            return;
+          }
+
+          status.textContent = `Total encontrado: ${body.total}`;
+          body.ceps.forEach((item) => {
+            const li = document.createElement('li');
+            li.textContent = `${item.cep} - ${item.logradouro} (${item.distanciaKm} km)`;
+            lista.appendChild(li);
+          });
+        } catch (error) {
+          status.textContent = 'Falha de conexão com a API.';
+        }
+      });
+    </script>
+  </body>
+</html>
